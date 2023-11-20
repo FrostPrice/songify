@@ -24,3 +24,15 @@ module.exports = (sequelize, Sequelize) => {
 
   return Music;
 };
+//
+// * SQL Script:
+// create table "Musicas" (
+//   id serial primary key,
+//   nome varchar(50) not null,
+//   duracao double precision not null,
+//   data_lancamento timestamp with time zone not null,
+//   "createdAt" timestamp with time zone not null,
+//   "updatedAt" timestamp with time zone not null,
+//   "AlbumId" integer references "Albums" on update cascade on delete
+//   set null
+// );

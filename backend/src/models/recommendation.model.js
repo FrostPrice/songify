@@ -17,3 +17,12 @@ module.exports = (sequelize, Sequelize) => {
 
   return Recommendation;
 };
+//
+// * SQL Script:
+// create table "Recomendacaos" (
+//   id serial primary key,
+//   nome varchar(50),
+//   tipo varchar(50),
+//   "createdAt" timestamp with time zone not null,
+//   "updatedAt" timestamp with time zone not null
+// );

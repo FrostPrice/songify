@@ -2,100 +2,114 @@ CREATE SCHEMA IF NOT EXISTS catalogo_musica;
 USE catalogo_musica;
 --
 -- Criando tabelas entidade
-CREATE TABLE IF NOT EXISTS usuario(
-    id INT NOT NULL AUTO_INCREMENT,
-    nome VARCHAR(50) NOT NULL,
-    idade INTEGER NOT NULL,
-    preferencia_musical VARCHAR(50),
-    email VARCHAR(50) NOT NULL,
-    senha VARCHAR(255) NOT NULL,
-    PRIMARY KEY(id)
+create table "Usuarios" (
+    id serial primary key,
+    nome varchar(50) not null unique,
+    idade integer not null,
+    preferencia_musical varchar(50),
+    email varchar(50) not null unique,
+    senha varchar(255) not null,
+    "createdAt" timestamp with time zone not null,
+    "updatedAt" timestamp with time zone not null
 );
-CREATE TABLE IF NOT EXISTS artista(
-    id INT NOT NULL AUTO_INCREMENT,
-    nome VARCHAR(50),
-    idade INTEGER NOT NULL,
-    id_genero INT NOT NULL,
-    PRIMARY KEY(id),
-    FOREIGN KEY(id_genero) REFERENCES genero(id)
+create table "Artista" (
+    id serial primary key,
+    nome varchar(255) not null unique,
+    idade integer not null,
+    "createdAt" timestamp with time zone not null,
+    "updatedAt" timestamp with time zone not null
 );
-CREATE TABLE IF NOT EXISTS album(
-    id INT NOT NULL AUTO_INCREMENT,
-    nome VARCHAR(50) NOT NULL,
-    imagem_capa BLOB,
-    duracao FLOAT NOT NULL,
-    PRIMARY KEY(id)
+create table "Albums" (
+    id serial primary key,
+    nome varchar(50) not null,
+    duracao double precision not null,
+    data_lancamento timestamp with time zone not null,
+    "createdAt" timestamp with time zone not null,
+    "updatedAt" timestamp with time zone not null
 );
-CREATE TABLE IF NOT EXISTS musica(
-    id INT NOT NULL AUTO_INCREMENT,
-    nome VARCHAR(50) NOT NULL,
-    duracao FLOAT NOT NULL,
-    data_lancamento DATE NOT NULL,
-    id_album INT NOT NULL,
-    PRIMARY KEY(id),
-    FOREIGN KEY(id_album) REFERENCES album(id)
+create table "Musicas" (
+    id serial primary key,
+    nome varchar(50) not null,
+    duracao double precision not null,
+    data_lancamento timestamp with time zone not null,
+    "createdAt" timestamp with time zone not null,
+    "updatedAt" timestamp with time zone not null,
+    "AlbumId" integer references "Albums" on update cascade on delete
+    set null
 );
-CREATE TABLE IF NOT EXISTS recomendacao(
-    id INT NOT NULL AUTO_INCREMENT,
-    tipo VARCHAR(50) NOT NULL,
-    id_musica INT NOT NULL,
-    id_artista INT NOT NULL,
-    PRIMARY KEY(id),
-    FOREIGN KEY(id_musica) REFERENCES musica(id),
-    FOREIGN KEY(id_artista) REFERENCES artista(id)
+create table "Recomendacaos" (
+    id serial primary key,
+    nome varchar(50),
+    tipo varchar(50),
+    "createdAt" timestamp with time zone not null,
+    "updatedAt" timestamp with time zone not null
 );
-CREATE TABLE IF NOT EXISTS genero(
-    id INT NOT NULL AUTO_INCREMENT,
-    nome VARCHAR(50) NOT NULL,
-    PRIMARY KEY(id)
+create table "Generos" (
+    id serial primary key,
+    nome varchar(50) not null unique,
+    "createdAt" timestamp with time zone not null,
+    "updatedAt" timestamp with time zone not null
+);
+create table "Permissoes" (
+    id serial primary key,
+    nome varchar(255) not null,
+    "createdAt" timestamp with time zone not null,
+    "updatedAt" timestamp with time zone not null
 );
 --
 -- Criando tabelas relacionamento
-CREATE TABLE IF NOT EXISTS usuario_recomendacao(
-    id INT NOT NULL AUTO_INCREMENT,
-    id_usuario INT NOT NULL,
-    id_recomendacao INT NOT NULL,
-    PRIMARY KEY(id),
-    FOREIGN KEY(id_usuario) REFERENCES usuario(id),
-    FOREIGN KEY(id_recomendacao) REFERENCES recomendacao(id)
+create table usuario_recomendacaos (
+    id serial primary key,
+    "createdAt" timestamp with time zone not null,
+    "updatedAt" timestamp with time zone not null,
+    "UsuarioId" integer references "Usuarios" on update cascade on delete cascade,
+    "RecomendacaoId" integer references "Recomendacaos" on update cascade on delete cascade,
+    unique ("UsuarioId", "RecomendacaoId")
 );
-CREATE TABLE IF NOT EXISTS recomendacao_artista(
-    id INT NOT NULL AUTO_INCREMENT,
-    id_recomendacao INT NOT NULL,
-    id_artista INT NOT NULL,
-    PRIMARY KEY(id),
-    FOREIGN KEY(id_recomendacao) REFERENCES recomendacao(id),
-    FOREIGN KEY(id_artista) REFERENCES artista(id)
+create table recomendacao_artista (
+    id serial primary key,
+    "createdAt" timestamp with time zone not null,
+    "updatedAt" timestamp with time zone not null,
+    "RecomendacaoId" integer references "Recomendacaos" on update cascade on delete cascade,
+    "ArtistumId" integer references "Artista" on update cascade on delete cascade,
+    unique ("RecomendacaoId", "ArtistumId")
 );
-CREATE TABLE IF NOT EXISTS recomendacao_musica(
-    id INT NOT NULL AUTO_INCREMENT,
-    id_recomendacao INT NOT NULL,
-    id_musica INT NOT NULL,
-    PRIMARY KEY(id),
-    FOREIGN KEY(id_recomendacao) REFERENCES recomendacao(id),
-    FOREIGN KEY(id_musica) REFERENCES musica(id)
+create table recomendacao_musicas (
+    id serial primary key,
+    "createdAt" timestamp with time zone not null,
+    "updatedAt" timestamp with time zone not null,
+    "RecomendacaoId" integer references "Recomendacaos" on update cascade on delete cascade,
+    "MusicaId" integer references "Musicas" on update cascade on delete cascade,
+    unique ("RecomendacaoId", "MusicaId")
 );
-CREATE TABLE IF NOT EXISTS genero_musica(
-    id INT NOT NULL AUTO_INCREMENT,
-    id_genero INT NOT NULL,
-    id_musica INT NOT NULL,
-    PRIMARY KEY(id),
-    FOREIGN KEY(id_genero) REFERENCES genero(id),
-    FOREIGN KEY(id_musica) REFERENCES musica(id)
+create table genero_musicas (
+    id serial primary key,
+    "createdAt" timestamp with time zone not null,
+    "updatedAt" timestamp with time zone not null,
+    "GeneroId" integer references "Generos" on update cascade on delete cascade,
+    "MusicaId" integer references "Musicas" on update cascade on delete cascade,
+    unique ("GeneroId", "MusicaId")
 );
-CREATE TABLE IF NOT EXISTS genero_artista(
-    id INT NOT NULL AUTO_INCREMENT,
-    id_genero INT NOT NULL,
-    id_artista INT NOT NULL,
-    PRIMARY KEY(id),
-    FOREIGN KEY(id_genero) REFERENCES genero(id),
-    FOREIGN KEY(id_artista) REFERENCES artista(id)
+create table genero_artista (
+    id serial primary key,
+    "createdAt" timestamp with time zone not null,
+    "updatedAt" timestamp with time zone not null,
+    "GeneroId" integer references "Generos" on update cascade on delete cascade,
+    "ArtistumId" integer references "Artista" on update cascade on delete cascade,
+    unique ("GeneroId", "ArtistumId")
 );
-CREATE TABLE IF NOT EXISTS album_artista(
-    id INT NOT NULL AUTO_INCREMENT,
-    id_album INT NOT NULL,
-    id_artista INT NOT NULL,
-    PRIMARY KEY(id),
-    FOREIGN KEY(id_album) REFERENCES album(id),
-    FOREIGN KEY(id_artista) REFERENCES artista(id)
+CREATE TABLE album_artista (
+    id serial PRIMARY KEY,
+    "createdAt" timestamp WITH TIME ZONE NOT NULL,
+    "updatedAt" timestamp WITH TIME ZONE NOT NULL,
+    "AlbumId" integer REFERENCES "Albums" ON UPDATE CASCADE ON DELETE CASCADE,
+    "ArtistumId" integer REFERENCES "Artista" ON UPDATE CASCADE ON DELETE CASCADE,
+    UNIQUE ("AlbumId", "ArtistumId")
+);
+create table usuario_permissoes (
+    "createdAt" timestamp with time zone not null,
+    "updatedAt" timestamp with time zone not null,
+    "PermissoId" integer not null references "Permissoes" on update cascade on delete cascade,
+    "UsuarioId" integer not null references "Usuarios" on update cascade on delete cascade,
+    primary key ("PermissoId", "UsuarioId")
 );

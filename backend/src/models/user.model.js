@@ -35,3 +35,15 @@ module.exports = (sequelize, Sequelize) => {
 
   return User;
 };
+//
+// * SQL Script:
+// create table "Usuarios" (
+//   id serial primary key,
+//   nome varchar(50) not null unique,
+//   idade integer not null,
+//   preferencia_musical varchar(50),
+//   email varchar(50) not null unique,
+//   senha varchar(255) not null,
+//   "createdAt" timestamp with time zone not null,
+//   "updatedAt" timestamp with time zone not null
+// );

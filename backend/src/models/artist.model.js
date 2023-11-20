@@ -20,3 +20,12 @@ module.exports = (sequelize, Sequelize) => {
 
   return Artist;
 };
+//
+// * SQL Script:
+// create table "Artista" (
+//   id serial primary key,
+//   nome varchar(255) not null unique,
+//   idade integer not null,
+//   "createdAt" timestamp with time zone not null,
+//   "updatedAt" timestamp with time zone not null
+// );

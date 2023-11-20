@@ -15,3 +15,11 @@ module.exports = (sequelize, Sequelize) => {
 
   return Genre;
 };
+//
+// * SQL Script:
+// create table "Generos" (
+//   id serial primary key,
+//   nome varchar(50) not null unique,
+//   "createdAt" timestamp with time zone not null,
+//   "updatedAt" timestamp with time zone not null
+// );

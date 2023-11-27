@@ -78,11 +78,24 @@ exports.update = async (req, res) => {
   try {
     const updateMusic = await Music.update(req.body, {
       where: { id: id },
+      include: [
+        {
+          model: Genre,
+          through: "genero_musica",
+        },
+      ],
     });
 
-    const music = Music.findOne({
+    const music = await Music.findOne({
       where: { id: id },
+      include: [
+        {
+          model: Genre,
+          through: "genero_musica",
+        },
+      ],
     });
+
     if (req.body.genre) {
       const genres = await Genre.findOne({
         where: {
@@ -94,7 +107,7 @@ exports.update = async (req, res) => {
         return res.status(404).send({ message: "Genre not found" });
       }
 
-      await updateMusic.setGeneros(genres);
+      await music.setGeneros(genres);
 
       if (req.body.albumName) {
         const albums = await Album.findAll({

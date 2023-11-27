@@ -19,7 +19,7 @@ module.exports = (sequelize, Sequelize) => {
 };
 //
 // * SQL Script:
-// create table "Recomendacaos" (
+// create table "Recomendacao" (
 //   id serial primary key,
 //   nome varchar(50),
 //   tipo varchar(50),

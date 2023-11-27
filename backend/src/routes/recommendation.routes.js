@@ -10,7 +10,11 @@ module.exports = function (app) {
     next();
   });
 
-  app.get("/api/recommendations", controller.get);
+  app.get(
+    "/api/recommendations",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.get
+  );
 
   app.post(
     "/api/recommendations",

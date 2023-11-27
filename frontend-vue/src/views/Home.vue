@@ -189,11 +189,16 @@
               <Field
                 tabindex="2"
                 class="form-control form-control-lg form-control-solid"
-                type="text"
                 name="type"
-                autocomplete="off"
+                as="select"
                 v-model:model-value="recommendationTypeInput"
-              />
+              >
+                <option disabled default value="">
+                  Selecione o tipo da recomendação
+                </option>
+                <option value="music">Musica</option>
+                <option value="artist">Artista</option>
+              </Field>
               <!--end::Input-->
               <div class="fv-plugins-message-container">
                 <div class="text-danger">

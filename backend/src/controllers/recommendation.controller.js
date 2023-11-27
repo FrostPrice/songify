@@ -99,9 +99,21 @@ exports.insert = async (req, res) => {
 
 exports.get = async (req, res) => {
   try {
-    const recommendations = await Recommendation.findAll();
+    const userId = req.userId;
 
-    if (recommendations.length === 0) return res.status(200).send([]);
+    const user = await User.findByPk(userId, {
+      include: [
+        {
+          model: Recommendation,
+          through: "usuario_recomendacao",
+        },
+      ],
+    });
+
+    const recommendations = await user.getRecomendacaos();
+
+    if (!recommendations || recommendations.length === 0)
+      return res.status(200).send([]);
     let recommendationsData = [];
 
     for (let i = 0; i < recommendations.length; i++) {

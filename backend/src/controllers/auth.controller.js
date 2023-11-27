@@ -8,6 +8,10 @@ const Op = db.Sequelize.Op;
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
+// * SQL Script: INSERT
+// INSERT INTO users (username, age, musical_preference, email, password) VALUES ('username_value', age_value, 'musical_preference_value', 'email_value', 'hashed_password_value');
+// INSERT INTO roles (nam VALUES ('role1'), ('role2'), ...;
+// UPDATE users SET role_id = 1 WHERE username = 'username_value' AND email = 'email_value';
 exports.signup = (req, res) => {
   // Save User to Database
   User.create({
@@ -42,6 +46,8 @@ exports.signup = (req, res) => {
     });
 };
 
+// * SQL Script: SELECT
+// SELECT "Users"."id", "Users"."username", "Users"."age", "Users"."musical_preference", "Users"."email", "Users"."password", "Users"."createdAt", "Users"."updatedAt", "Permissoes"."id" AS "Permissoes.id", "Permissoes"."name" AS "Permissoes.name", "Permissoes"."createdAt" AS "Permissoes.createdAt", "Permissoes"."updatedAt" AS "Permissoes.updatedAt", "Permissoes->UserPermissoes"."UserId" AS "Permissoes.UserPermissoes.UserId", "Permissoes->UserPermissoes"."PermissaoId" AS "Permissoes.UserPermissoes.PermissaoId" FROM "Users" AS "Users" LEFT OUTER JOIN ("user_permissoes" AS "Permissoes->UserPermissoes" INNER JOIN "Permissoes" AS "Permissoes" ON "Permissoes->UserPermissoes"."PermissaoId" = "Permissoes"."id") ON "Users"."id" = "Permissoes->UserPermissoes"."UserId";
 exports.signin = (req, res) => {
   User.findOne({
     where: {

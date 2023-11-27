@@ -6,6 +6,11 @@ const User = db.user;
 
 const Op = db.Sequelize.Op;
 
+// * SQL Script: INSERT
+// INSERT INTO "Recomendacaos" ("id","name","createdAt","updatedAt") VALUES (DEFAULT,'name','createdAt','updatedAt');
+// INSERT INTO "usuario_recomendacao" ("id","createdAt","updatedAt","UsuarioId","RecomendacaoId") VALUES (DEFAULT,'createdAt','updatedAt','UsuarioId','RecomendacaoId');
+// INSERT INTO "musica_recomendacao" ("id","createdAt","updatedAt","MusicaId","RecomendacaoId") VALUES (DEFAULT,'createdAt','updatedAt','MusicaId','RecomendacaoId');
+// INSERT INTO "artista_recomendacao" ("id","createdAt","updatedAt","ArtistaId","RecomendacaoId") VALUES (DEFAULT,'createdAt','updatedAt','ArtistaId','RecomendacaoId');
 exports.insert = async (req, res) => {
   let musicsWithSameGenre = [];
   let artistsWithSameGenre = [];
@@ -97,6 +102,8 @@ exports.insert = async (req, res) => {
   }
 };
 
+// * SQL Script: SELECT
+// SELECT "Recomendacaos"."id", "Recomendacaos"."name", "Recomendacaos"."type", "Recomendacaos"."createdAt", "Recomendacaos"."updatedAt", "Recomendacaos->UserRecomendacaos"."createdAt" AS "Recomendacaos.UserRecomendacaos.createdAt", "Recomendacaos->UserRecomendacaos"."updatedAt" AS "Recomendacaos.UserRecomendacaos.updatedAt", "Recomendacaos->UserRecomendacaos"."UsuarioId" AS "Recomendacaos.UserRecomendacaos.UsuarioId", "Recomendacaos->UserRecomendacaos"."RecomendacaoId" AS "Recomendacaos.UserRecomendacaos.RecomendacaoId" FROM "Recomendacaos" AS "Recomendacaos" LEFT OUTER JOIN ("usuario_recomendacao" AS "Recomendacaos->UserRecomendacaos" INNER JOIN "Users" AS "Users" ON "Recomendacaos->UserRecomendacaos"."UsuarioId" = "Users"."id") ON "Recomendacaos"."id" = "Recomendacaos->UserRecomendacaos"."RecomendacaoId";
 exports.get = async (req, res) => {
   try {
     const userId = req.userId;
@@ -158,6 +165,8 @@ exports.get = async (req, res) => {
   }
 };
 
+// * SQL Script: UPDATE
+// UPDATE "Recomendacaos" SET "name"='name','type'='type','createdAt'='createdAt','updatedAt'='updatedAt' WHERE "id" = 'id';
 exports.update = async (req, res) => {
   const id = req.params.id;
   try {
@@ -178,6 +187,8 @@ exports.update = async (req, res) => {
   }
 };
 
+// * SQL Script: DELETE
+// DELETE FROM "Recomendacaos" WHERE "id" = id;
 exports.delete = (req, res) => {
   const id = req.params.id;
 

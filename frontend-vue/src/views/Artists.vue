@@ -31,6 +31,7 @@
             <th scope="col">Id</th>
             <th scope="col">Nome</th>
             <th scope="col">Idade</th>
+            <th scope="col">Gênero Musical</th>
             <th scope="col">Opções</th>
           </tr>
         </thead>
@@ -40,6 +41,7 @@
             <td>{{ artist.id }}</td>
             <td>{{ artist.name }}</td>
             <td>{{ artist.age }}</td>
+            <td>{{ artist.genre }}</td>
             <td>
               <button
                 type="button"
@@ -450,6 +452,7 @@ export default defineComponent({
           id: artist.id ? artist.id : "Error",
           name: artist.name ? artist.name : "Error",
           age: artist.age ? artist.age : "Error",
+          genre: artist.genre ? artist.genre : "Error",
         };
         artistsRowData.push(artistData);
       });

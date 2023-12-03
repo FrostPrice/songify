@@ -92,7 +92,11 @@ exports.update = async (req, res) => {
         },
       });
 
-      await artist.setGeneros(genres);
+      if (!genres) {
+        await artist.setGeneros([1]);
+      } else {
+        await artist.setGeneros(genres);
+      }
 
       if (req.body.albuns) {
         const albumsFound = await Album.findAll({

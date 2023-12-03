@@ -32,7 +32,8 @@
             <th scope="col">Nome</th>
             <th scope="col">Duração</th>
             <th scope="col">Data de Lançamento</th>
-            <th scope="col">Genre</th>
+            <th scope="col">Gẽnero</th>
+            <th scope="col">Opções</th>
           </tr>
         </thead>
         <tbody>

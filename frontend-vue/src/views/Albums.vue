@@ -32,6 +32,8 @@
             <th scope="col">Nome</th>
             <th scope="col">Duração</th>
             <th scope="col">Data de Lançamento</th>
+            <th scope="col">Artistas</th>
+            <th scope="col">Opções</th>
           </tr>
         </thead>
         <tbody>
@@ -41,6 +43,7 @@
             <td>{{ album.name }}</td>
             <td>{{ album.duration }}</td>
             <td>{{ formateDatetimeCalendar(album.releaseDate) }}</td>
+            <td>{{ album.artists }}</td>
             <td>
               <button
                 type="button"
@@ -573,11 +576,14 @@ export default defineComponent({
       let albumsRowData = [];
 
       storeAlbums.albums.forEach((album) => {
+        let firstArtistName = album.Artista?.[0]?.name;
+
         const albumData = {
           id: album.id ? album.id : "Error",
           name: album.name ? album.name : "Error",
           duration: album.duration ? album.duration : "Error",
           releaseDate: album.releaseDate ? album.releaseDate : "Error",
+          artists: firstArtistName ? firstArtistName : "",
         };
         albumsRowData.push(albumData);
       });

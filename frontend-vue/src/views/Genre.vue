@@ -30,6 +30,7 @@
           <tr>
             <th scope="col">Id</th>
             <th scope="col">Nome</th>
+            <th scope="col">Opções</th>
           </tr>
         </thead>
         <tbody>
